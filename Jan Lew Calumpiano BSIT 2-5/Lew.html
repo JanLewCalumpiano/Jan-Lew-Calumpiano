@@ -1,111 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Information</title>
-     <style>
-        /* Reset some default browser styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <title>Personal Information</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #c9d6ff, #e2e2e2);
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-        .container {
-            display: flex;
-            align-items: center;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            width: 80%;
-            max-width: 900px;
-            margin: 20px;
-        }
+    .container {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 80%;
+      max-width: 900px;
+      margin: 20px;
+    }
 
-        .image-container {
-            flex: 1;
-            padding: 20px;
-        }
+    .image-container {
+      flex: 1;
+      padding: 20px;
+      border: 5px solid;
+      border-image-slice: 1;
+      border-width: 5px;
+      border-image-source: linear-gradient(45deg, #6a11cb, #2575fc);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        .image-container img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            object-fit: cover;
-        }
+    .profile-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
 
-        .info-container {
-            flex: 2;
-            padding: 20px;
-        }
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 5px solid #3498db;
+      object-fit: cover;
+      box-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .info-container h1 {
-            font-size: 2rem;
-            color: #4CAF50;
-            margin-bottom: 10px;
-        }
+    .profile-pic:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(52, 152, 219, 0.8);
+    }
 
-        .info-container p {
-            font-size: 1rem;
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
+    .badge {
+      background-color: #4CAF50;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-top: 8px;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-        .info-container .label {
-            font-weight: bold;
-            color: #555;
-        }
+    .toggle-btn {
+      display: inline-block;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      text-align: center;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      margin-top: 12px;
+    }
 
-        .info-container .content {
-            color: #777;
-        }
+    .toggle-btn:hover {
+      background-color: #45a049;
+    }
 
-        /* Add some responsiveness */
-        @media screen and (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                width: 100%;
-            }
+    .quote {
+      font-style: italic;
+      font-size: 13px;
+      color: #666;
+      margin-top: 12px;
+      text-align: center;
+    }
 
-            .image-container {
-                width: 100%;
-                text-align: center;
-            }
+    .info-container {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      flex: 2;
+    }
 
-            .info-container {
-                width: 100%;
-            }
-        }
-    </style>
+    #toggle-info:checked ~ .info-container {
+      display: block;
+      max-height: 1000px;
+      opacity: 1;
+      margin-top: 20px;
+    }
+
+    .info-container h1 {
+      font-size: 2rem;
+      color: #4CAF50;
+      margin-bottom: 10px;
+    }
+
+    .info-container p {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .info-container .label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .info-container .content {
+      color: #777;
+    }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .image-container,
+      .info-container {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Image Section -->
-        <div class="image-container">
-            <img src="your-image.jpg" alt="Your Image">
-        </div>
+  <div class="container">
+    <input type="checkbox" id="toggle-info" hidden />
 
-        <div class="info-container">
-            <h1>My personal Information</h1>
-            <p><span class="label">Full Name: </span><span class="content">Jan Lew Calumpiano</span></p>
-            <p><span class="label">Date of Birth: </span><span class="content">December 05, 2004</span></p>
-            <p><span class="label">Email: </span><span class="content">calumpianojan13@gmail.com</span></p>
-            <p><span class="label">Address: </span><span class="content"></span>Hugo Perez, Trece Martires City, Cavite</p>
-            <p><span class="label">About Me: </span><span class="content">Hello, I like to play games in a computer that it makes me want to be a developer of a game.</span></p>
-        </div>
+    <div class="image-container">
+      <div class="profile-wrapper">
+        <img src="luh.jpg" alt="Profile Picture" class="profile-pic" />
+        <span class="badge">💻 IT Student</span>
+      </div>
+      <label for="toggle-info" class="toggle-btn">Click to know about me or hide it again!</label>
+      <p class="quote">"Code. Learn. Repeat."</p>
     </div>
- 
+
+    <div class="info-container">
+      <h1>My Personal Information</h1>
+      <p><span class="label">Full Name: </span><span class="content">Jan Lew Calumpiano</span></p>
+      <p><span class="label">Date of Birth: </span><span class="content">December 05, 2004</span></p>
+      <p><span class="label">Email: </span><span class="content">calumpianojan13@gmail.com</span></p>
+      <p><span class="label">Address: </span><span class="content">Hugo Perez, Trece Martires City, Cavite</span></p>
+      <p><span class="label">About Me: </span><span class="content">
+        Hello, I'm Jan Lew Calumpiano, an IT student and passionate about tech and enjoy exploring programming, and practicing more programming languages in my free time that I can use in the future.
+      </span></p>
+    </div>
+  </div>
 </body>
 </html>
